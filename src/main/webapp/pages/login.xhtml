@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+<h:body>
+	<ui:composition template="/pages/template.xhtml">
+		<ui:define name="content">
+			<b:panel title="Login">
+				<b:form>
+					<b:panelGrid colSpans="3,9" size="xs">
+						<h:outputText value="Code" />
+						<b:inputSecret value="#{addModel.key}" placeholder="Code" />
+						<h:outputText value="" />
+						<b:buttonGroup>
+							<b:commandButton action="#{addController.doStartSession}" value="Sitzung starten" look="primary" />
+						</b:buttonGroup>
+					</b:panelGrid>
+				</b:form>
+			</b:panel>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
