@@ -5,6 +5,7 @@ package de.jottyfan.auto.db.jooq;
 
 
 import de.jottyfan.auto.db.jooq.tables.TMileage;
+import de.jottyfan.auto.db.jooq.tables.VLogin;
 import de.jottyfan.auto.db.jooq.tables.VMileage;
 
 import javax.annotation.Generated;
@@ -27,6 +28,11 @@ public class Tables {
      * The table <code>ddgj1773.t_mileage</code>.
      */
     public static final TMileage T_MILEAGE = de.jottyfan.auto.db.jooq.tables.TMileage.T_MILEAGE;
+
+    /**
+     * The table <code>ddgj1773.v_login</code>.
+     */
+    public static final VLogin V_LOGIN = de.jottyfan.auto.db.jooq.tables.VLogin.V_LOGIN;
 
     /**
      * The table <code>ddgj1773.v_mileage</code>.

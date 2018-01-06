@@ -1,7 +1,6 @@
 package de.jottyfan.auto;
 
-import static de.jottyfan.auto.db.jooq.Tables.T_MILEAGE;
-import static de.jottyfan.auto.db.jooq.Tables.V_MILEAGE;
+import static de.jottyfan.auto.db.jooq.Tables.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -22,6 +21,7 @@ import org.jooq.InsertValuesStep8;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.SQLDialect;
+import org.jooq.SelectConditionStep;
 import org.jooq.SelectJoinStep;
 import org.jooq.SelectWithTiesStep;
 import org.jooq.exception.DataAccessException;
@@ -162,11 +162,16 @@ public class Gateway {
 	 * check if login is true
 	 * 
 	 * @param key to be used
-	 * @return
+	 * @return true for a valid login, false otherwise
 	 * @throws DataAccessException
 	 */
 	public boolean checkLogin(String key) throws DataAccessException {
-		// TODO: use key, do some hash algorithm and check for existence in a to be created database table
-		throw new DataAccessException("not yet implemented");
+		SelectConditionStep<Record1<Integer>> sql = jooq
+		// @formatter:off
+			.selectCount()
+			.from(V_LOGIN)
+			.where(V_LOGIN.PASSWORD.eq(key));
+		// @formatter:on
+		return sql.fetchOne().get(0).equals(new Integer(1));
 	}
 }

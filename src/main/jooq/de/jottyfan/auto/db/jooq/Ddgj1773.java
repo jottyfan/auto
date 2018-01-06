@@ -5,6 +5,7 @@ package de.jottyfan.auto.db.jooq;
 
 
 import de.jottyfan.auto.db.jooq.tables.TMileage;
+import de.jottyfan.auto.db.jooq.tables.VLogin;
 import de.jottyfan.auto.db.jooq.tables.VMileage;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Ddgj1773 extends SchemaImpl {
 
-    private static final long serialVersionUID = -1050406959;
+    private static final long serialVersionUID = 748276929;
 
     /**
      * The reference instance of <code>ddgj1773</code>
@@ -42,6 +43,11 @@ public class Ddgj1773 extends SchemaImpl {
      * The table <code>ddgj1773.t_mileage</code>.
      */
     public final TMileage T_MILEAGE = de.jottyfan.auto.db.jooq.tables.TMileage.T_MILEAGE;
+
+    /**
+     * The table <code>ddgj1773.v_login</code>.
+     */
+    public final VLogin V_LOGIN = de.jottyfan.auto.db.jooq.tables.VLogin.V_LOGIN;
 
     /**
      * The table <code>ddgj1773.v_mileage</code>.
@@ -74,6 +80,7 @@ public class Ddgj1773 extends SchemaImpl {
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
             TMileage.T_MILEAGE,
+            VLogin.V_LOGIN,
             VMileage.V_MILEAGE);
     }
 }
