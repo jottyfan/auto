@@ -20,6 +20,8 @@ import org.jooq.Field;
 import org.jooq.InsertValuesStep8;
 import org.jooq.Record;
 import org.jooq.Record1;
+import org.jooq.Record10;
+import org.jooq.Record2;
 import org.jooq.SQLDialect;
 import org.jooq.SelectConditionStep;
 import org.jooq.SelectJoinStep;
@@ -161,7 +163,8 @@ public class Gateway {
 	/**
 	 * check if login is true
 	 * 
-	 * @param key to be used
+	 * @param key
+	 *            to be used
 	 * @return true for a valid login, false otherwise
 	 * @throws DataAccessException
 	 */
@@ -173,5 +176,45 @@ public class Gateway {
 			.where(V_LOGIN.PASSWORD.eq(key));
 		// @formatter:on
 		return sql.fetchOne().get(0).equals(new Integer(1));
+	}
+
+	/**
+	 * load all data from view
+	 * 
+	 * @return list of data or empty list
+	 * @throws DataAccessException
+	 */
+	public List<MileageViewBean> getData() throws DataAccessException {
+		SelectJoinStep<Record10<Integer, Integer, BigDecimal, String, Timestamp, EnumFuel, String, BigDecimal, EnumProvider, BigDecimal>> sql = jooq
+		// @formatter:off
+			.select(V_MILEAGE.PK,
+					V_MILEAGE.MILEAGE,
+					V_MILEAGE.AMOUNT,
+					V_MILEAGE.ANNOTATION,
+					V_MILEAGE.BUYDATE,
+					V_MILEAGE.FUEL,
+					V_MILEAGE.LOCATION,
+					V_MILEAGE.PRICE,
+					V_MILEAGE.PROVIDER,
+					V_MILEAGE.€_2fL)
+			.from(V_MILEAGE);
+		// @formatter:on
+		LOGGER.debug(sql.toString());
+		List<MileageViewBean> list = new ArrayList<>();
+		for (Record r : sql.fetch()) {
+			MileageViewBean bean = new MileageViewBean();
+			bean.setPk(r.get(V_MILEAGE.PK));
+			bean.setMileage(r.get(V_MILEAGE.MILEAGE));
+			bean.setAmount(r.get(V_MILEAGE.AMOUNT));
+			bean.setAnnotation(r.get(V_MILEAGE.ANNOTATION));
+			bean.setBuydate(r.get(V_MILEAGE.BUYDATE));
+			bean.setFuel(r.get(V_MILEAGE.FUEL));
+			bean.setLocation(r.get(V_MILEAGE.LOCATION));
+			bean.setPrice(r.get(V_MILEAGE.PRICE));
+			bean.setProvider(r.get(V_MILEAGE.PROVIDER));
+			bean.setEuroproliter(r.get(V_MILEAGE.€_2fL));
+			list.add(bean);
+		}
+		return list;
 	}
 }

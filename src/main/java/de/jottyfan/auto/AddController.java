@@ -17,11 +17,15 @@ public class AddController {
 	@ManagedProperty(value="#{addModel}")
 	private AddModel addModel;
 
+	@ManagedProperty(value="#{showModel}")
+	private ShowModel showModel;
+	
 	@ManagedProperty(value="#{facesContext}")
 	private FacesContext facesContext;
 	
 	public String doStartSession() {
 		boolean newSession = addModel.startSession(facesContext);
+		showModel.loadData(facesContext);
 		return newSession ? "/pages/add.jsf" : "/pages/login.jsf";
 	}
 	
@@ -32,7 +36,7 @@ public class AddController {
 	
 	public String doAdd() {
 		addModel.add(facesContext);
-		return "/pages/login.jsf";
+		return "/pages/add.jsf";
 	}
 	
 	public AddModel getAddModel() {
@@ -45,5 +49,13 @@ public class AddController {
 
 	public void setFacesContext(FacesContext facesContext) {
 		this.facesContext = facesContext;
+	}
+
+	public ShowModel getShowModel() {
+		return showModel;
+	}
+
+	public void setShowModel(ShowModel showModel) {
+		this.showModel = showModel;
 	}	
 }

@@ -6,35 +6,54 @@
 <h:body>
 	<ui:composition template="/pages/template.xhtml">
 		<ui:define name="content">
+			<b:accordion expandedPanels="input">
+				<b:panel id="table" title="Daten">
+					<b:dataTable value="#{showModel.data}" var="e">
+						<b:dataTableColumn label="ID" value="#{e.pk}" />
+						<b:dataTableColumn label="Kilometerstand" value="#{e.mileage}" />
+						<b:dataTableColumn label="Preis in €" value="#{e.price}" />
+						<b:dataTableColumn label="Menge in l" value="#{e.amount}" />
+						<b:dataTableColumn label="Kraftstoff" value="#{e.fuel}" />
+						<b:dataTableColumn label="Ort" value="#{e.location}" />
+						<b:dataTableColumn label="Tankstelle" value="#{e.provider}" />
+						<b:dataTableColumn label="Datum" value="#{e.buydate}" />
+						<b:dataTableColumn label="€ / l" value="#{e.europroliter}" />
+						<b:dataTableColumn label="Kommentar" value="#{e.annotation}" />
+					</b:dataTable>
+				</b:panel>
+				<b:panel id="input" title="Eingabe">
+					<b:form>
+						<b:panelGrid colSpans="3,9" size="xs">
+							<h:outputText value="Kilometerstand" />
+							<b:inputText value="#{addModel.addBean.mileage}">
+								<f:convertNumber integerOnly="true" maxIntegerDigits="7" />
+							</b:inputText>
+							<h:outputText value="Kraftstoff" />
+							<b:inputText value="#{addModel.addBean.fuel}" typeahead="true" typeaheadValues="#{addModel.fuels}" />
+							<h:outputText value="Ort" />
+							<b:inputText value="#{addModel.addBean.location}" typeahead="true" typeaheadValues="#{addModel.locations}" />
+							<h:outputText value="Preis" />
+							<b:inputText value="#{addModel.addBean.price}" mask="99,99">
+								<f:convertNumber currencySymbol="EUR" maxIntegerDigits="3" maxFractionDigits="2" pattern="#00,00" />
+							</b:inputText>
+							<h:outputText value="Menge" />
+							<b:inputText value="#{addModel.addBean.amount}" mask="99,99">
+								<f:convertNumber currencySymbol="l" maxIntegerDigits="3" maxFractionDigits="2" pattern="#00,00" />
+							</b:inputText>
+							<h:outputText value="Tankstellenname" />
+							<b:inputText value="#{addModel.addBean.provider}" typeahead="true" typeaheadValues="#{addModel.providers}" />
+							<h:outputText value="Rechnungszeitpunkt" />
+							<b:dateTimePicker value="#{addModel.addBean.buydate}" />
+							<h:outputText value="Kommentar" />
+							<b:inputTextarea value="#{addModel.addBean.annotation}" />
+							<h:outputText value="" />
+							<b:commandButton action="#{addController.doAdd}" look="primary" value="übernehmen" />
+						</b:panelGrid>
+					</b:form>
+				</b:panel>
+			</b:accordion>
 			<b:form>
-				<b:panelGrid colSpans="3,9" size="xs">
-					<h:outputText value="Kilometerstand" />
-					<b:inputText value="#{addModel.addBean.mileage}">
-						<f:convertNumber integerOnly="true" maxIntegerDigits="7" />
-					</b:inputText>
-					<h:outputText value="Kraftstoff" />
-					<b:inputText value="#{addModel.addBean.fuel}" typeahead="true" typeaheadValues="#{addModel.fuels}" />
-					<h:outputText value="Ort" />
-					<b:inputText value="#{addModel.addBean.location}" typeahead="true" typeaheadValues="#{addModel.locations}" />
-					<h:outputText value="Preis" />
-					<b:inputText value="#{addModel.addBean.price}" mask="99,99">
-						<f:convertNumber currencySymbol="EUR" maxIntegerDigits="3" maxFractionDigits="2" pattern="#00,00" />
-					</b:inputText>
-					<h:outputText value="Menge" />
-					<b:inputText value="#{addModel.addBean.amount}" mask="99,99">
-						<f:convertNumber currencySymbol="l" maxIntegerDigits="3" maxFractionDigits="2" pattern="#00,00" />
-					</b:inputText>
-					<h:outputText value="Tankstellenname" />
-					<b:inputText value="#{addModel.addBean.provider}" typeahead="true" typeaheadValues="#{addModel.providers}" />
-					<h:outputText value="Rechnungszeitpunkt" />
-					<b:dateTimePicker value="#{addModel.addBean.buydate}" />
-					<h:outputText value="Kommentar" />
-					<b:inputTextarea value="#{addModel.addBean.annotation}" />
-				</b:panelGrid>
-				<b:buttonGroup>
-					<b:commandButton action="#{addController.doAdd}" look="primary" value="übernehmen" />
-          <b:commandButton action="#{addController.doInvalidateSession}" value="Sitzung beenden" immediate="true" />
-				</b:buttonGroup>
+				<b:commandButton action="#{addController.doInvalidateSession}" value="Sitzung beenden" immediate="true" />
 			</b:form>
 		</ui:define>
 	</ui:composition>

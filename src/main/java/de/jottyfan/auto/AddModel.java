@@ -49,12 +49,7 @@ public class AddModel {
 				locations = gw.getLocations();
 				fuels = gw.getFuels();
 				providers = gw.getProviders();
-				addBean = new AddBean();
-				// setting defaults
-				addBean.setFuel(EnumFuel.E10.getLiteral());
-				addBean.setLocation("Dresden");
-				addBean.setProvider(EnumProvider.Kaufland.getLiteral());
-				addBean.setBuydate(new Date());
+				resetAddBean();
 			}
 			return newSession;
 		} catch (DataAccessException e) {
@@ -62,6 +57,15 @@ public class AddModel {
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sitzung kaputt", e.getMessage()));
 			return false;
 		}
+	}
+	
+	private void resetAddBean() {
+		addBean = new AddBean();
+		// setting defaults
+		addBean.setFuel(EnumFuel.E10.getLiteral());
+		addBean.setLocation("Dresden");
+		addBean.setProvider(EnumProvider.Kaufland.getLiteral());
+		addBean.setBuydate(new Date());
 	}
 
 	public void invalidateSession(FacesContext facesContext) {
@@ -74,6 +78,7 @@ public class AddModel {
 			if (gw.add(addBean)) {
 				facesContext.addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_INFO, "neuer Datensatz", gw.getLastDataset()));
+				resetAddBean();
 				return true;
 			} else {
 				facesContext.addMessage(null,
