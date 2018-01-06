@@ -12,17 +12,13 @@ public class SessionBean {
 	private UUID uuid;
 
 	/**
-	 * start a session key is valid
+	 * start a session if valid is true
 	 * 
-	 * @param s
+	 * @param valids
 	 * @return true if new session was started, false otherwise
 	 */
-	public boolean startSession(String key) {
-		if (key.equals("secret")) {
-			uuid = UUID.randomUUID();
-		} else {
-			uuid = null;
-		}
+	public boolean startSession(boolean valid) {
+		uuid = valid ? UUID.randomUUID() : null;
 		return uuid != null;
 	}
 

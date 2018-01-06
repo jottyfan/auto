@@ -158,4 +158,15 @@ public class Gateway {
 		return buf.toString();
 	}
 
+	/**
+	 * check if login is true
+	 * 
+	 * @param key to be used
+	 * @return
+	 * @throws DataAccessException
+	 */
+	public boolean checkLogin(String key) throws DataAccessException {
+		// TODO: use key, do some hash algorithm and check for existence in a to be created database table
+		throw new DataAccessException("not yet implemented");
+	}
 }

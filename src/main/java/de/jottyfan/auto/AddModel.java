@@ -39,23 +39,29 @@ public class AddModel {
 		if (sessionBean == null) {
 			sessionBean = new SessionBean();
 		}
-		boolean newSession = sessionBean.startSession(key);
-		if (!newSession) {
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sitzung ungültig",
-					"Die Sitzung konnte nicht gestartet werden."));
-		} else {
+		try {
 			Gateway gw = new Gateway(facesContext);
-			locations = gw.getLocations();
-			fuels = gw.getFuels();
-			providers = gw.getProviders();
-			addBean = new AddBean();
-			// setting defaults
-			addBean.setFuel(EnumFuel.E10.getLiteral());
-			addBean.setLocation("Dresden");
-			addBean.setProvider(EnumProvider.Kaufland.getLiteral());
-			addBean.setBuydate(new Date());
+			boolean newSession = sessionBean.startSession(gw.checkLogin(key));
+			if (!newSession) {
+				facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sitzung ungültig",
+						"Die Sitzung konnte nicht gestartet werden."));
+			} else {
+				locations = gw.getLocations();
+				fuels = gw.getFuels();
+				providers = gw.getProviders();
+				addBean = new AddBean();
+				// setting defaults
+				addBean.setFuel(EnumFuel.E10.getLiteral());
+				addBean.setLocation("Dresden");
+				addBean.setProvider(EnumProvider.Kaufland.getLiteral());
+				addBean.setBuydate(new Date());
+			}
+			return newSession;
+		} catch (DataAccessException e) {
+			facesContext.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Sitzung kaputt", e.getMessage()));
+			return false;
 		}
-		return newSession;
 	}
 
 	public void invalidateSession(FacesContext facesContext) {
