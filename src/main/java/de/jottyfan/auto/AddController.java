@@ -25,8 +25,7 @@ public class AddController {
 	
 	public String doStartSession() {
 		boolean newSession = addModel.startSession(facesContext);
-		showModel.loadData(facesContext);
-		return newSession ? "/pages/add.jsf" : "/pages/login.jsf";
+		return newSession ? toAdd() : "/pages/login.jsf";
 	}
 	
 	public String doInvalidateSession() {
@@ -34,9 +33,14 @@ public class AddController {
 		return "/pages/login.jsf";
 	}
 	
+	public String toAdd() {
+		showModel.loadData(facesContext);
+		return "/pages/add.jsf";
+	}
+	
 	public String doAdd() {
 		addModel.add(facesContext);
-		return "/pages/add.jsf";
+		return toAdd();
 	}
 	
 	public AddModel getAddModel() {

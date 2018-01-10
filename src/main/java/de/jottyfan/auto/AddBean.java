@@ -13,6 +13,7 @@ import de.jottyfan.auto.db.jooq.enums.EnumProvider;
  *
  */
 public class AddBean {
+
 	private Integer mileage;
 	private String fuel;
 	private String location;

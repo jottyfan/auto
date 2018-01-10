@@ -26,6 +26,7 @@ import org.jooq.SQLDialect;
 import org.jooq.SelectConditionStep;
 import org.jooq.SelectJoinStep;
 import org.jooq.SelectWithTiesStep;
+import org.jooq.UpdateConditionStep;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 
@@ -216,5 +217,32 @@ public class Gateway {
 			list.add(bean);
 		}
 		return list;
+	}
+
+	/**
+	 * update bean in db
+	 * 
+	 * @param bean
+	 * @throws DataAccessException
+	 */
+	public boolean update(MileageViewBean bean) throws DataAccessException {
+		BigDecimal amount = bean.getAmount() == null ? null : bean.getAmount().setScale(2, RoundingMode.HALF_UP);
+		BigDecimal price = bean.getPrice() == null ? null : bean.getPrice().setScale(2, RoundingMode.HALF_UP);
+		Timestamp buydate = bean.getBuydate() == null ? null : new Timestamp(bean.getBuydate().getTime());
+		UpdateConditionStep<TMileageRecord> sql = jooq
+		// @formatter:off
+			.update(T_MILEAGE)
+			.set(T_MILEAGE.MILEAGE, bean.getMileage())
+			.set(T_MILEAGE.AMOUNT,amount)
+		    .set(T_MILEAGE.FUEL,bean.getFuel())
+		    .set(T_MILEAGE.PRICE,price)
+		    .set(T_MILEAGE.PROVIDER,bean.getProvider())
+		    .set(T_MILEAGE.LOCATION,bean.getLocation())
+		    .set(T_MILEAGE.BUYDATE,buydate)
+		    .set(T_MILEAGE.ANNOTATION,bean.getAnnotation())
+			.where(T_MILEAGE.PK.eq(bean.getPk()));
+		// @formatter:on
+		LOGGER.debug(sql.toString());
+		return sql.execute() > 0;
 	}
 }

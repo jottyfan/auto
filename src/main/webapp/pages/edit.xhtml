@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:b="http://bootsfaces.net/ui">
+<h:body>
+	<ui:composition template="/pages/template.xhtml">
+		<ui:define name="content">
+			<b:panel title="Daten korrigieren">
+				<b:form>
+					<b:panelGrid colSpans="3,9">
+						<h:outputText value="ID" />
+						<h:outputText value="#{editModel.bean.pk}" />
+						<h:outputText value="Kilometerstand" />
+						<b:inputText value="#{editModel.bean.mileage}">
+							<f:convertNumber integerOnly="true" maxIntegerDigits="7" />
+						</b:inputText>
+						<h:outputText value="Kraftstoff" />
+						<b:inputText value="#{editModel.bean.fuel}" typeahead="true" typeaheadValues="#{addModel.fuels}" />
+						<h:outputText value="Ort" />
+						<b:inputText value="#{editModel.bean.location}" typeahead="true" typeaheadValues="#{addModel.locations}" />
+						<h:outputText value="Preis" />
+						<b:inputText value="#{editModel.bean.price}" mask="99,99">
+							<f:convertNumber currencySymbol="EUR" maxIntegerDigits="2" maxFractionDigits="2" pattern="#00,00" />
+						</b:inputText>
+						<h:outputText value="Menge" />
+						<b:inputText value="#{editModel.bean.amount}" mask="99,99">
+							<f:convertNumber currencySymbol="l" maxIntegerDigits="2" maxFractionDigits="2" pattern="#00,00" />
+						</b:inputText>
+						<h:outputText value="Tankstellenname" />
+						<b:inputText value="#{editModel.bean.provider}" typeahead="true" typeaheadValues="#{addModel.providers}" />
+						<h:outputText value="Rechnungszeitpunkt" />
+						<b:dateTimePicker value="#{editModel.bean.buydate}" />
+						<h:outputText value="Kommentar" />
+						<b:inputTextarea value="#{editModel.bean.annotation}" />
+					</b:panelGrid>
+					<b:buttonGroup>
+					  <b:commandButton action="#{addController.toAdd}" value="Abbrechen" immediate="true" />
+					  <b:commandButton action="#{editController.doUpdate}" value="Übernehmen" look="primary" />
+					</b:buttonGroup>
+				</b:form>
+			</b:panel>
+			<b:form>
+				<b:commandButton action="#{addController.doInvalidateSession}" value="Sitzung beenden" immediate="true" />
+			</b:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
