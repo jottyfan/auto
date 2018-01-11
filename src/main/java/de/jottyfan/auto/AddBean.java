@@ -1,11 +1,6 @@
 package de.jottyfan.auto;
 
-import java.io.PrintStream;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import de.jottyfan.auto.db.jooq.enums.EnumFuel;
-import de.jottyfan.auto.db.jooq.enums.EnumProvider;
 
 /**
  * 
@@ -22,24 +17,6 @@ public class AddBean {
 	private String provider;
 	private Date buydate;
 	private String annotation;
-
-	public EnumFuel getFuelEnum() {
-		for (EnumFuel e : EnumFuel.values()) {
-			if (e.getLiteral().equals(fuel)) {
-				return e;
-			}
-		}
-		return null;
-	}
-
-	public EnumProvider getProviderEnum() {
-		for (EnumProvider e : EnumProvider.values()) {
-			if (e.getLiteral().equals(provider)) {
-				return e;
-			}
-		}
-		return null;
-	}
 
 	public Integer getMileage() {
 		return mileage;

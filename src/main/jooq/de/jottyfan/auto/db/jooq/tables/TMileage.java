@@ -6,8 +6,6 @@ package de.jottyfan.auto.db.jooq.tables;
 
 import de.jottyfan.auto.db.jooq.Ddgj1773;
 import de.jottyfan.auto.db.jooq.Keys;
-import de.jottyfan.auto.db.jooq.enums.EnumFuel;
-import de.jottyfan.auto.db.jooq.enums.EnumProvider;
 import de.jottyfan.auto.db.jooq.tables.records.TMileageRecord;
 
 import java.math.BigDecimal;
@@ -38,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TMileage extends TableImpl<TMileageRecord> {
 
-    private static final long serialVersionUID = -105913910;
+    private static final long serialVersionUID = -1631508277;
 
     /**
      * The reference instance of <code>ddgj1773.t_mileage</code>
@@ -66,7 +64,7 @@ public class TMileage extends TableImpl<TMileageRecord> {
     /**
      * The column <code>ddgj1773.t_mileage.fuel</code>.
      */
-    public final TableField<TMileageRecord, EnumFuel> FUEL = createField("fuel", org.jooq.util.postgres.PostgresDataType.VARCHAR.asEnumDataType(de.jottyfan.auto.db.jooq.enums.EnumFuel.class), this, "");
+    public final TableField<TMileageRecord, String> FUEL = createField("fuel", org.jooq.impl.SQLDataType.CLOB.defaultValue(org.jooq.impl.DSL.field("'E10'::text", org.jooq.impl.SQLDataType.CLOB)), this, "");
 
     /**
      * The column <code>ddgj1773.t_mileage.location</code>.
@@ -74,19 +72,19 @@ public class TMileage extends TableImpl<TMileageRecord> {
     public final TableField<TMileageRecord, String> LOCATION = createField("location", org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
-     * The column <code>ddgj1773.t_mileage.price</code>. in €
+     * The column <code>ddgj1773.t_mileage.price</code>.
      */
-    public final TableField<TMileageRecord, BigDecimal> PRICE = createField("price", org.jooq.impl.SQLDataType.NUMERIC(5, 2), this, "in €");
+    public final TableField<TMileageRecord, BigDecimal> PRICE = createField("price", org.jooq.impl.SQLDataType.NUMERIC(5, 2), this, "");
 
     /**
-     * The column <code>ddgj1773.t_mileage.amount</code>. in l
+     * The column <code>ddgj1773.t_mileage.amount</code>.
      */
-    public final TableField<TMileageRecord, BigDecimal> AMOUNT = createField("amount", org.jooq.impl.SQLDataType.NUMERIC(5, 2), this, "in l");
+    public final TableField<TMileageRecord, BigDecimal> AMOUNT = createField("amount", org.jooq.impl.SQLDataType.NUMERIC(5, 2), this, "");
 
     /**
      * The column <code>ddgj1773.t_mileage.provider</code>.
      */
-    public final TableField<TMileageRecord, EnumProvider> PROVIDER = createField("provider", org.jooq.util.postgres.PostgresDataType.VARCHAR.asEnumDataType(de.jottyfan.auto.db.jooq.enums.EnumProvider.class), this, "");
+    public final TableField<TMileageRecord, String> PROVIDER = createField("provider", org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>ddgj1773.t_mileage.buydate</code>.

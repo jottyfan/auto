@@ -1,6 +1,8 @@
 package de.jottyfan.auto;
 
-import static de.jottyfan.auto.db.jooq.Tables.*;
+import static de.jottyfan.auto.db.jooq.Tables.T_MILEAGE;
+import static de.jottyfan.auto.db.jooq.Tables.V_LOGIN;
+import static de.jottyfan.auto.db.jooq.Tables.V_MILEAGE;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -21,17 +23,15 @@ import org.jooq.InsertValuesStep8;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record10;
-import org.jooq.Record2;
 import org.jooq.SQLDialect;
 import org.jooq.SelectConditionStep;
 import org.jooq.SelectJoinStep;
+import org.jooq.SelectSeekStep1;
 import org.jooq.SelectWithTiesStep;
 import org.jooq.UpdateConditionStep;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 
-import de.jottyfan.auto.db.jooq.enums.EnumFuel;
-import de.jottyfan.auto.db.jooq.enums.EnumProvider;
 import de.jottyfan.auto.db.jooq.tables.records.TMileageRecord;
 
 /**
@@ -81,10 +81,17 @@ public class Gateway {
 	 * 
 	 * @return fuels
 	 */
-	public List<EnumFuel> getFuels() {
-		List<EnumFuel> list = new ArrayList<>();
-		for (EnumFuel e : EnumFuel.values()) {
-			list.add(e);
+	public List<String> getFuels() {
+		SelectSeekStep1<Record1<String>, String> sql = jooq
+		// @formatter:off
+		  .selectDistinct(T_MILEAGE.FUEL)
+		  .from(T_MILEAGE)
+		  .orderBy(T_MILEAGE.FUEL);
+		// @formatter:on
+		LOGGER.debug(sql.toString());
+		List<String> list = new ArrayList<>();
+		for (Record r : sql.fetch()) {
+			list.add(r.get(T_MILEAGE.FUEL));
 		}
 		return list;
 	}
@@ -94,10 +101,17 @@ public class Gateway {
 	 * 
 	 * @return providers
 	 */
-	public List<EnumProvider> getProviders() {
-		List<EnumProvider> list = new ArrayList<>();
-		for (EnumProvider e : EnumProvider.values()) {
-			list.add(e);
+	public List<String> getProviders() {
+		SelectSeekStep1<Record1<String>, String> sql = jooq
+		// @formatter:off
+		  .selectDistinct(T_MILEAGE.PROVIDER)
+		  .from(T_MILEAGE)
+		  .orderBy(T_MILEAGE.PROVIDER);
+		// @formatter:on
+		LOGGER.debug(sql.toString());
+		List<String> list = new ArrayList<>();
+		for (Record r : sql.fetch()) {
+			list.add(r.get(T_MILEAGE.PROVIDER));
 		}
 		return list;
 	}
@@ -115,7 +129,7 @@ public class Gateway {
 		BigDecimal price = bean.getPrice() == null ? null
 				: new BigDecimal(bean.getPrice()).setScale(2, RoundingMode.HALF_UP);
 		Timestamp buydate = bean.getBuydate() == null ? null : new Timestamp(bean.getBuydate().getTime());
-		InsertValuesStep8<TMileageRecord, Integer, BigDecimal, EnumFuel, BigDecimal, EnumProvider, String, Timestamp, String> sql = jooq
+		InsertValuesStep8<TMileageRecord, Integer, BigDecimal, String, BigDecimal, String, String, Timestamp, String> sql = jooq
 		// @formatter:off
 			.insertInto(T_MILEAGE,
 						T_MILEAGE.MILEAGE,
@@ -128,9 +142,9 @@ public class Gateway {
 						T_MILEAGE.ANNOTATION)
 			.values(bean.getMileage(),
 					amount,
-					bean.getFuelEnum(),
+					bean.getFuel(),
 					price,
-					bean.getProviderEnum(),
+					bean.getProvider(),
 					bean.getLocation(),
 					buydate,
 					bean.getAnnotation());
@@ -186,7 +200,7 @@ public class Gateway {
 	 * @throws DataAccessException
 	 */
 	public List<MileageViewBean> getData() throws DataAccessException {
-		SelectJoinStep<Record10<Integer, Integer, BigDecimal, String, Timestamp, EnumFuel, String, BigDecimal, EnumProvider, BigDecimal>> sql = jooq
+		SelectJoinStep<Record10<Integer, Integer, BigDecimal, String, Timestamp, String, String, BigDecimal, String, BigDecimal>> sql = jooq
 		// @formatter:off
 			.select(V_MILEAGE.PK,
 					V_MILEAGE.MILEAGE,
@@ -197,7 +211,7 @@ public class Gateway {
 					V_MILEAGE.LOCATION,
 					V_MILEAGE.PRICE,
 					V_MILEAGE.PROVIDER,
-					V_MILEAGE.€_2fL)
+					V_MILEAGE.EURO_2fL)
 			.from(V_MILEAGE);
 		// @formatter:on
 		LOGGER.debug(sql.toString());
@@ -213,7 +227,7 @@ public class Gateway {
 			bean.setLocation(r.get(V_MILEAGE.LOCATION));
 			bean.setPrice(r.get(V_MILEAGE.PRICE));
 			bean.setProvider(r.get(V_MILEAGE.PROVIDER));
-			bean.setEuroproliter(r.get(V_MILEAGE.€_2fL));
+			bean.setEuroproliter(r.get(V_MILEAGE.EURO_2fL));
 			list.add(bean);
 		}
 		return list;

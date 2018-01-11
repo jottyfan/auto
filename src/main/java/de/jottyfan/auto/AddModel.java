@@ -1,6 +1,5 @@
 package de.jottyfan.auto;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,9 +10,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.jooq.exception.DataAccessException;
-
-import de.jottyfan.auto.db.jooq.enums.EnumFuel;
-import de.jottyfan.auto.db.jooq.enums.EnumProvider;
 
 /**
  * 
@@ -28,8 +24,8 @@ public class AddModel {
 	private SessionBean sessionBean;
 
 	private List<String> locations;
-	private List<EnumFuel> fuels;
-	private List<EnumProvider> providers;
+	private List<String> fuels;
+	private List<String> providers;
 
 	private AddBean addBean;
 
@@ -62,9 +58,9 @@ public class AddModel {
 	private void resetAddBean() {
 		addBean = new AddBean();
 		// setting defaults
-		addBean.setFuel(EnumFuel.E10.getLiteral());
+		addBean.setFuel("E10");
 		addBean.setLocation("Dresden");
-		addBean.setProvider(EnumProvider.Kaufland.getLiteral());
+		addBean.setProvider("Kaufland");
 		addBean.setBuydate(new Date());
 	}
 
@@ -117,16 +113,16 @@ public class AddModel {
 
 	public String getFuels() {
 		StringBuilder buf = new StringBuilder();
-		for (EnumFuel fuel : fuels) {
-			buf.append(fuel.getLiteral()).append(",");
+		for (String fuel : fuels) {
+			buf.append(fuel).append(",");
 		}
 		return buf.toString();
 	}
 
 	public String getProviders() {
 		StringBuilder buf = new StringBuilder();
-		for (EnumProvider prov : providers) {
-			buf.append(prov.getLiteral()).append(",");
+		for (String prov : providers) {
+			buf.append(prov).append(",");
 		}
 		return buf.toString();
 	}

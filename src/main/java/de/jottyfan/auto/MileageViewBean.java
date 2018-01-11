@@ -3,9 +3,6 @@ package de.jottyfan.auto;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import de.jottyfan.auto.db.jooq.enums.EnumFuel;
-import de.jottyfan.auto.db.jooq.enums.EnumProvider;
-
 /**
  * 
  * @author jotty
@@ -16,11 +13,11 @@ public class MileageViewBean {
 	private BigDecimal amount;
 	private String annotation;
 	private Date buydate;
-	private EnumFuel fuel;
+	private String fuel;
 	private String location;
 	private Integer mileage;
 	private BigDecimal price;
-	private EnumProvider provider;
+	private String provider;
 	private BigDecimal europroliter;
 
 	public Integer getPk() {
@@ -55,11 +52,11 @@ public class MileageViewBean {
 		this.buydate = buydate;
 	}
 
-	public EnumFuel getFuel() {
+	public String getFuel() {
 		return fuel;
 	}
 
-	public void setFuel(EnumFuel fuel) {
+	public void setFuel(String fuel) {
 		this.fuel = fuel;
 	}
 
@@ -87,11 +84,11 @@ public class MileageViewBean {
 		this.price = price;
 	}
 
-	public EnumProvider getProvider() {
+	public String getProvider() {
 		return provider;
 	}
 
-	public void setProvider(EnumProvider provider) {
+	public void setProvider(String provider) {
 		this.provider = provider;
 	}
 

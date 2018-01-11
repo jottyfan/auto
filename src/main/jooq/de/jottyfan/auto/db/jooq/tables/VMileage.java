@@ -5,8 +5,6 @@ package de.jottyfan.auto.db.jooq.tables;
 
 
 import de.jottyfan.auto.db.jooq.Ddgj1773;
-import de.jottyfan.auto.db.jooq.enums.EnumFuel;
-import de.jottyfan.auto.db.jooq.enums.EnumProvider;
 import de.jottyfan.auto.db.jooq.tables.records.VMileageRecord;
 
 import java.math.BigDecimal;
@@ -36,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VMileage extends TableImpl<VMileageRecord> {
 
-    private static final long serialVersionUID = 1345971247;
+    private static final long serialVersionUID = 2139949471;
 
     /**
      * The reference instance of <code>ddgj1773.v_mileage</code>
@@ -64,7 +62,7 @@ public class VMileage extends TableImpl<VMileageRecord> {
     /**
      * The column <code>ddgj1773.v_mileage.fuel</code>.
      */
-    public final TableField<VMileageRecord, EnumFuel> FUEL = createField("fuel", org.jooq.util.postgres.PostgresDataType.VARCHAR.asEnumDataType(de.jottyfan.auto.db.jooq.enums.EnumFuel.class), this, "");
+    public final TableField<VMileageRecord, String> FUEL = createField("fuel", org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>ddgj1773.v_mileage.location</code>.
@@ -84,7 +82,7 @@ public class VMileage extends TableImpl<VMileageRecord> {
     /**
      * The column <code>ddgj1773.v_mileage.provider</code>.
      */
-    public final TableField<VMileageRecord, EnumProvider> PROVIDER = createField("provider", org.jooq.util.postgres.PostgresDataType.VARCHAR.asEnumDataType(de.jottyfan.auto.db.jooq.enums.EnumProvider.class), this, "");
+    public final TableField<VMileageRecord, String> PROVIDER = createField("provider", org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>ddgj1773.v_mileage.buydate</code>.
@@ -92,9 +90,9 @@ public class VMileage extends TableImpl<VMileageRecord> {
     public final TableField<VMileageRecord, Timestamp> BUYDATE = createField("buydate", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
     /**
-     * The column <code>ddgj1773.v_mileage.€/l</code>.
+     * The column <code>ddgj1773.v_mileage.euro/l</code>.
      */
-    public final TableField<VMileageRecord, BigDecimal> €_2fL = createField("€/l", org.jooq.impl.SQLDataType.NUMERIC(4, 2), this, "");
+    public final TableField<VMileageRecord, BigDecimal> EURO_2fL = createField("euro/l", org.jooq.impl.SQLDataType.NUMERIC(4, 2), this, "");
 
     /**
      * The column <code>ddgj1773.v_mileage.annotation</code>.
