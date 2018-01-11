@@ -35,6 +35,7 @@ public class EditController {
 		boolean result = model.update(facesContext);
 		if (result) {
 			showModel.loadData(facesContext);
+			showModel.setExpandedPanels("table");
 			return "/pages/add.jsf";
 		} else {
 			return "";

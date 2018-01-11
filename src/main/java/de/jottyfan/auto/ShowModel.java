@@ -17,6 +17,9 @@ import org.jooq.exception.DataAccessException;
 @ManagedBean
 @SessionScoped
 public class ShowModel {
+	
+	private String expandedPanels;
+	
 	private List<MileageViewBean> data;
 	
 	/**
@@ -34,5 +37,13 @@ public class ShowModel {
 
 	public List<MileageViewBean> getData() {
 		return data;
+	}
+
+	public String getExpandedPanels() {
+		return expandedPanels;
+	}
+
+	public void setExpandedPanels(String expandedPanels) {
+		this.expandedPanels = expandedPanels;
 	}
 }

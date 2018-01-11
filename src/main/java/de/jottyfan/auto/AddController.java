@@ -25,6 +25,7 @@ public class AddController {
 	
 	public String doStartSession() {
 		boolean newSession = addModel.startSession(facesContext);
+		showModel.setExpandedPanels("input");
 		return newSession ? toAdd() : "/pages/login.jsf";
 	}
 	
@@ -40,6 +41,7 @@ public class AddController {
 	
 	public String doAdd() {
 		addModel.add(facesContext);
+		showModel.setExpandedPanels("table");
 		return toAdd();
 	}
 	

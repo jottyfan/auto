@@ -6,7 +6,7 @@
 <h:body>
 	<ui:composition template="/pages/template.xhtml">
 		<ui:define name="content">
-			<b:accordion expandedPanels="input">
+			<b:accordion expandedPanels="#{showModel.expandedPanels}">
 				<b:panel id="table" title="Daten">
 					<b:form>
 						<b:dataTable value="#{showModel.data}" var="e">
